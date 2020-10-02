@@ -1,0 +1,12 @@
+{
+  "name": "SkyKow",
+  "displayName": "SkyKow",
+  "expo": {
+    "name": "SkyKow",
+    "slug": "SkyKow",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
