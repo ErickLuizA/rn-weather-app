@@ -75,11 +75,13 @@ $ yarn start or expo start(to run in the expo client)
 
 ## :framed_picture: Screenshots
 
+<div>
   <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150216.png"  width="100"/>
   <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150210.png"  width="100"/>
   <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150152.png"  width="100"/>
   <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150229.png"  width="100"/>
   <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150225.png"  width="100"/>
+</div>
 
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
 
