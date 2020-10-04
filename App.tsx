@@ -1,19 +1,34 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import Main from './src/navigation/Main'
+import { ThemeProvider } from './src/context/ThemeContext'
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_300Light,
+  Inter_500Medium,
+} from '@expo-google-fonts/inter'
+import { AppLoading } from 'expo'
+import { NotificationProvider } from './src/context/NotificationContext'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
-}
+  let [fontsLoaded] = useFonts({
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+  })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+  return (
+    <NotificationProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Main />
+        </NavigationContainer>
+      </ThemeProvider>
+    </NotificationProvider>
+  )
+}
