@@ -28,7 +28,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
   }
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       const storagedPermission = await AsyncStorage.getItem('@RNNotification')
 
       if (storagedPermission === 'yes') {
@@ -44,7 +44,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
   }
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (permission) {
         await Notifications.scheduleNotificationAsync({
           content: {
@@ -55,7 +55,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
               .slice(0, 2)}ºC`,
           },
           trigger: {
-            seconds: 18000,
+            seconds: 15000,
             repeats: true,
           },
         })
@@ -71,7 +71,7 @@ const NotificationProvider = ({ children }: NotificationProviderProps) => {
         await Notifications.cancelAllScheduledNotificationsAsync()
       }
     })()
-  }, [permission])
+  }, [permission, weatherData.temp, weatherData.city])
 
   return (
     <NotificationContext.Provider value={{ load, setData }}>
