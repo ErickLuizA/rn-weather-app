@@ -18,8 +18,9 @@ interface WeatherDIsplayProps {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-evenly',
     flex: 1,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
 
   horizontalContainer: {
@@ -107,7 +108,7 @@ export default function WeatherDIsplay({
     <View
       style={
         isVertical({ height, width })
-          ? styles.container
+          ? [styles.container, { width: width }]
           : styles.horizontalContainer
       }>
       <View>

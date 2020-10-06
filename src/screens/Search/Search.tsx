@@ -52,13 +52,11 @@ export default function Search({}: SearchProps) {
     }
 
     try {
-      const res = await api.get('', {
+      const res = await api.get('weather?', {
         params: {
           q: input,
         },
       })
-
-      console.log(res.data)
 
       setWeather(res.data)
       setInput('')
@@ -93,11 +91,11 @@ export default function Search({}: SearchProps) {
         {Boolean(error) && <Text style={styles.error}> {error} </Text>}
         {weather && (
           <WeatherDIsplay
-            name={weather.name}
-            country={weather.sys.country}
-            description={weather?.weather[0].description}
-            temperature={weather?.main?.temp}
-            main={weather.weather[0].main}
+            name={weather.city.name}
+            country={weather.city.country}
+            description={weather?.list[0].weather[0].description}
+            temperature={weather?.list[0].main.temp}
+            main={weather.list[0].weather[0].main}
             date={new Date().toLocaleString().slice(0, 10)}
           />
         )}

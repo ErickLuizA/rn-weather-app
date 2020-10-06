@@ -1,5 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Alert,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import Container from '../../components/Container'
 import api from '../../services/api'
 import * as Location from 'expo-location'
@@ -10,58 +15,70 @@ import WeatherDIsplay from '../../components/WeatherDIsplay'
 import { NotificationContext } from '../../context/NotificationContext'
 
 export interface WeatherProps {
-  coord: {
-    lon: number
-    lat: number
+  cod: string
+  message: number
+  cnt: number
+  list: WeatherList[]
+
+  city: {
+    id: number
+    name: string
+    coord: {
+      lat: number
+      lon: number
+    }
+    country: string
+    timezone: number
+    sunrise: number
+    sunset: number
   }
-  weather: [
-    {
-      id: number
-      main: string
-      description: string
-      icon: string
-    },
-  ]
-  base: string
+}
+
+interface WeatherList {
+  dt: number
   main: {
     temp: number
     feels_like: number
     temp_min: number
     temp_max: number
     pressure: number
+    sea_level: number
+    grnd_level: number
     humidity: number
+    temp_kf: number
   }
-  visibility: number
+  weather: [
+    {
+      id: number
+      main: string
+      description: string
+      icon: number
+    },
+  ]
+  clouds: {
+    all: number
+  }
   wind: {
     speed: number
     deg: number
   }
-  clouds: {
-    all: number
+  visibility: number
+  pop: number
+  rain: {
+    '3h': number
   }
-  dt: number
   sys: {
-    type: number
-    id: number
-    message: number
-    country: string
-    sunrise: number
-    sunset: number
+    pod: string
   }
-  timezone: number
-  id: number
-  name: string
-  cod: number
+  dt_txt: string
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-})
 
 export default function Home() {
   const [location, setLocation] = useState<LocationObject>()
   const [weather, setWeather] = useState<WeatherProps>()
   const { setData } = useContext(NotificationContext)
+
+  const { width } = useWindowDimensions()
 
   const { theme } = useContext(ThemeContext)
 
@@ -83,7 +100,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await api.get('', {
+        const res = await api.get('forecast?', {
           params: {
             lat: location?.coords.latitude,
             lon: location?.coords.longitude,
@@ -92,16 +109,32 @@ export default function Home() {
 
         const data: WeatherProps = res.data
 
-        setWeather(data)
+        const array: WeatherList[] = []
+
+        array.push(res.data.list[0])
+        array.push(res.data.list[7])
+        array.push(res.data.list[17])
+        array.push(res.data.list[23])
+        array.push(res.data.list[31])
+
+        const newData = {
+          city: data.city,
+          cnt: data.cnt,
+          cod: data.cod,
+          list: array,
+          message: data.message,
+        }
+
+        setWeather(newData)
         setData({
-          temp: data.main.temp,
-          city: data.name,
+          temp: data.list[0].main.temp,
+          city: data.city.name,
         })
       } catch (error) {
         Alert.alert(error)
       }
     })()
-  }, [location?.coords.longitude, location?.coords.latitude])
+  }, [location?.coords.longitude, location?.coords.latitude]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!weather) {
     return (
@@ -111,19 +144,26 @@ export default function Home() {
     )
   }
 
-  console.log('Main => ', weather.weather[0].main)
-
   return (
     <Container>
-      <ScrollView contentContainerStyle={styles.container}>
-        <WeatherDIsplay
-          name={weather.name}
-          country={weather.sys.country}
-          description={weather?.weather[0].description}
-          temperature={weather?.main?.temp}
-          main={weather.weather[0].main}
-          date={new Date().toLocaleString().slice(0, 10)}
-        />
+      <ScrollView
+        horizontal
+        snapToInterval={width}
+        decelerationRate="fast"
+        bounces={false}
+        showsHorizontalScrollIndicator={false}>
+        {weather.list.map((w) => {
+          return (
+            <WeatherDIsplay
+              name={weather.city.name}
+              country={weather.city.country}
+              description={w.weather[0].description}
+              temperature={w.main.temp}
+              main={w.weather[0].main}
+              date={w.dt_txt.slice(0, 10)}
+            />
+          )
+        })}
       </ScrollView>
     </Container>
   )
