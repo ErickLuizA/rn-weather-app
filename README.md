@@ -84,7 +84,6 @@ $ yarn start or expo start(to run in the expo client)
 </div>
 
 ## :information_source: TODO
-  - Add see weather for other days
   - Implement tests
 
 
