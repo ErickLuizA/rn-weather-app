@@ -3,11 +3,53 @@ import { View, StyleSheet, useWindowDimensions, Text } from 'react-native'
 import Container from '../../components/Container'
 import { AntDesign } from '@expo/vector-icons'
 import { TextInput } from 'react-native-gesture-handler'
-import { WeatherProps } from '../Home/Home'
 import api from '../../services/api'
 import WeatherDIsplay from '../../components/WeatherDIsplay'
 
-interface SearchProps {}
+export interface WeatherProps {
+  coord: {
+    lon: number
+    lat: number
+  }
+  weather: [
+    {
+      id: number
+      main: string
+      description: string
+      icon: string
+    },
+  ]
+  base: string
+  main: {
+    temp: number
+    feels_like: number
+    temp_min: number
+    temp_max: number
+    pressure: number
+    humidity: number
+  }
+  visibility: number
+  wind: {
+    speed: number
+    deg: number
+  }
+  clouds: {
+    all: number
+  }
+  dt: number
+  sys: {
+    type: number
+    id: number
+    message: number
+    country: string
+    sunrise: number
+    sunset: number
+  }
+  timezone: number
+  id: number
+  name: string
+  cod: number
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +81,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function Search({}: SearchProps) {
+export default function Search() {
   const [input, setInput] = useState('')
   const { width } = useWindowDimensions()
   const [error, setError] = useState('')
@@ -91,11 +133,11 @@ export default function Search({}: SearchProps) {
         {Boolean(error) && <Text style={styles.error}> {error} </Text>}
         {weather && (
           <WeatherDIsplay
-            name={weather.city.name}
-            country={weather.city.country}
-            description={weather?.list[0].weather[0].description}
-            temperature={weather?.list[0].main.temp}
-            main={weather.list[0].weather[0].main}
+            name={weather.name}
+            country={weather.sys.country}
+            description={weather?.weather[0].description}
+            temperature={weather?.main.temp}
+            main={weather?.weather[0].main}
             date={new Date().toLocaleString().slice(0, 10)}
           />
         )}

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Alert,
+  StyleSheet,
   useWindowDimensions,
   View,
 } from 'react-native'
@@ -72,6 +73,14 @@ interface WeatherList {
   }
   dt_txt: string
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+})
 
 export default function Home() {
   const [location, setLocation] = useState<LocationObject>()
@@ -155,6 +164,7 @@ export default function Home() {
         {weather.list.map((w) => {
           return (
             <WeatherDIsplay
+              key={w.dt_txt}
               name={weather.city.name}
               country={weather.city.country}
               description={w.weather[0].description}
