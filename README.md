@@ -1,7 +1,3 @@
-<p align="center"> 
-  <img alt="SkyKow icon" src="./assets/splash.png"  width="280"/>
-</p>
-
 <h1 align="center"> SkyKow </h1>
 
 <p align="center">
@@ -76,15 +72,17 @@ $ yarn start or expo start(to run in the expo client)
 ## :framed_picture: Screenshots
 
 <div>
-  <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150216.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150210.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150152.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150229.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Screenshot_20201004-150225.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Home.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Search.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Search_result.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Settings.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Dark.png"  width="200"/>
 </div>
 
 ## :information_source: TODO
-  - Implement tests
+  - Tests
+  - Fix notifications
+  - Design fix
 
 
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
