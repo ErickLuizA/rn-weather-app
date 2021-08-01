@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-community/async-storage'
 import React, { useContext, useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ScrollView } from 'react-native-gesture-handler'
 import Container from '../../components/Container'
 import { ThemeContext } from '../../context/ThemeContext'

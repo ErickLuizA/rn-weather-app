@@ -9,7 +9,7 @@ import {
   Inter_300Light,
   Inter_500Medium,
 } from '@expo-google-fonts/inter'
-import { AppLoading } from 'expo'
+import AppLoading from 'expo-app-loading'
 import { NotificationProvider } from './src/context/NotificationContext'
 
 export default function App() {

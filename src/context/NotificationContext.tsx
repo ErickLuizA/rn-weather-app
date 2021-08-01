@@ -1,6 +1,6 @@
 import React, { createContext, ReactChild, useEffect, useState } from 'react'
 import * as Notifications from 'expo-notifications'
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface NotificationProviderProps {
   children: ReactChild

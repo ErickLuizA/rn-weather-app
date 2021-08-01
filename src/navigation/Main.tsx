@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import BottomTab from './BottomTab'
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Onboarding from '../screens/Onboarding'
 
 const { Navigator, Screen } = createStackNavigator()
