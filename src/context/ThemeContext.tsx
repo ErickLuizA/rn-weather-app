@@ -1,39 +1,31 @@
 import React, { createContext, ReactChild, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { lightTheme, darkTheme } from '../components/theme'
 
-interface ThemeProviderProps {
-  children: ReactChild
-}
+import { lightTheme, darkTheme, Theme } from '../utils/theme'
 
 interface ThemeContextProps {
   toggle: () => void
   theme: Theme
 }
 
-interface Theme {
-  dark: boolean
-  primary: string
-  text: string
-  buttonText: string
+interface ThemeProviderProps {
+  children: ReactChild
 }
 
 const ThemeContext = createContext({} as ThemeContextProps)
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState(lightTheme)
+  const [theme, setTheme] = useState(darkTheme)
 
   useEffect(() => {
-    (async () => {
-      const storagedTheme = await AsyncStorage.getItem('@RNTheme')
+    getStoragedTheme()
+  }, [])
 
-      if (storagedTheme === 'dark') {
-        setTheme(darkTheme)
-      } else {
-        setTheme(lightTheme)
-      }
-    })()
-  }, [theme])
+  async function getStoragedTheme() {
+    const storagedTheme = await AsyncStorage.getItem('@RNTheme')
+
+    setTheme(storagedTheme === 'light' ? lightTheme : darkTheme)
+  }
 
   async function toggle() {
     if (theme === darkTheme) {

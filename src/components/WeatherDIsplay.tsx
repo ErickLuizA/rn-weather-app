@@ -5,7 +5,7 @@ import Sunlight from '../../assets/sunlight.svg'
 import Raining from '../../assets/raining.svg'
 import Cloud from '../../assets/cloud.svg'
 import Snow from '../../assets/snow.svg'
-import { isVertical } from './isVertical'
+import { isVertical } from '../utils/isVertical'
 
 interface WeatherDIsplayProps {
   name: string

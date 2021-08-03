@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import Main from './src/navigation/Main'
-import { ThemeProvider } from './src/context/ThemeContext'
 import {
   useFonts,
   Inter_400Regular,
@@ -10,7 +8,10 @@ import {
   Inter_500Medium,
 } from '@expo-google-fonts/inter'
 import AppLoading from 'expo-app-loading'
-import { NotificationProvider } from './src/context/NotificationContext'
+
+import { ThemeProvider } from './src/context/ThemeContext'
+
+import Main from './src/navigation/Main'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -23,12 +24,10 @@ export default function App() {
     return <AppLoading />
   }
   return (
-    <NotificationProvider>
-      <ThemeProvider>
-        <NavigationContainer>
-          <Main />
-        </NavigationContainer>
-      </ThemeProvider>
-    </NotificationProvider>
+    <ThemeProvider>
+      <NavigationContainer>
+        <Main />
+      </NavigationContainer>
+    </ThemeProvider>
   )
 }

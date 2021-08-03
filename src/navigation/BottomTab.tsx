@@ -1,37 +1,16 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Home from '../screens/Home'
-import Search from '../screens/Search'
-import Settings from '../screens/Settings'
 import { AntDesign } from '@expo/vector-icons'
 
-const { Navigator, Screen } = createBottomTabNavigator()
+import Home from '../screens/Home'
+// import Search from '../screens/Search'
+// import Settings from '../screens/Settings'
 
-const icons = {
-  Search: {
-    lib: AntDesign,
-    name: 'search1',
-  },
-  Home: {
-    lib: AntDesign,
-    name: 'home',
-  },
-  Settings: {
-    lib: AntDesign,
-    name: 'setting',
-  },
-}
+const { Navigator, Screen } = createBottomTabNavigator()
 
 export default function BottomTab() {
   return (
     <Navigator
-      lazy
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          const { lib: Icon, name } = icons[route.name]
-          return <Icon name={name} size={size} color={color} />
-        },
-      })}
       tabBarOptions={{
         adaptive: true,
         iconStyle: { flexGrow: 0.8 },
@@ -39,9 +18,28 @@ export default function BottomTab() {
         safeAreaInsets: { bottom: 10 },
       }}
       initialRouteName="Home">
-      <Screen name="Search" component={Search} />
-      <Screen name="Home" component={Home} />
-      <Screen name="Settings" component={Settings} />
+      <Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <AntDesign name="home" size={size} color={color} />
+          },
+        }}
+      />
+      {/* <Screen name="Search" component={Search}
+            options={{
+          tabBarIcon: ({ color, size }) => {
+            return <AntDesign name="search1" size={size} color={color} />
+          },
+        }} /> */}
+      {/* <Screen name="Settings" component={Settings}
+            options={{
+          tabBarIcon: ({ color, size }) => {
+            return <AntDesign name="setting" size={size} color={color} />
+          },
+        }}
+         /> */}
     </Navigator>
   )
 }
