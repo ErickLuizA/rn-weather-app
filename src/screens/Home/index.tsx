@@ -5,7 +5,7 @@ import { RectButton } from 'react-native-gesture-handler'
 import useCurrentWeather, { Status } from '../../hooks/useCurrentWeather'
 import useTheme from '../../hooks/useTheme'
 
-import WeatherDIsplay from '../../components/WeatherDIsplay'
+import WeatherDisplay from '../../components/WeatherDisplay'
 
 import styles from './styles'
 
@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <ScrollView
       style={[styles.successContainer, { backgroundColor: theme.background }]}>
-      <WeatherDIsplay currentWeather={currentWeather} />
+      <WeatherDisplay currentWeather={currentWeather} />
     </ScrollView>
   )
 }

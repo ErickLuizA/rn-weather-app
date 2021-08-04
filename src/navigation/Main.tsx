@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import useTheme from '../hooks/useTheme'
 
 import Onboarding from '../screens/Onboarding'
+import Forecast from '../screens/Forecast'
 import BottomTab from './BottomTab'
 
 import { AS_VISITED } from '../utils/constants'
@@ -30,11 +31,23 @@ export default function Main() {
     <>
       <Navigator>
         {visited ? (
-          <Screen
-            name="Home"
-            component={BottomTab}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Screen
+              name="Home"
+              component={BottomTab}
+              options={{ headerShown: false }}
+            />
+            <Screen
+              name="Forecast"
+              component={Forecast}
+              options={{
+                headerStyle: {
+                  backgroundColor: theme.background,
+                },
+                headerTintColor: theme.onBackground,
+              }}
+            />
+          </>
         ) : (
           <>
             <Screen
@@ -46,6 +59,23 @@ export default function Main() {
               name="Home"
               component={BottomTab}
               options={{ headerShown: false }}
+            />
+            <Screen
+              name="Forecast"
+              component={Forecast}
+              options={{
+                headerStyle: {
+                  backgroundColor: 'red',
+                },
+                headerTintColor: 'red',
+                headerTitleStyle: {
+                  backgroundColor: 'red',
+                  color: 'blue',
+                },
+                headerBackTitleStyle: {
+                  color: theme.onBackground,
+                },
+              }}
             />
           </>
         )}
