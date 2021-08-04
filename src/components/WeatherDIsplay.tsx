@@ -1,135 +1,101 @@
-import React, { useContext } from 'react'
-import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
-import { ThemeContext } from '../context/ThemeContext'
-import Sunlight from '../../assets/sunlight.svg'
-import Raining from '../../assets/raining.svg'
-import Cloud from '../../assets/cloud.svg'
-import Snow from '../../assets/snow.svg'
-import { isVertical } from '../utils/isVertical'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { RectButton } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/core'
+import { AntDesign } from '@expo/vector-icons'
+
+import { CurrentWeatherState } from '../hooks/useCurrentWeather'
+import useTheme from '../hooks/useTheme'
+
+import { getFormatedDate } from '../utils/formatDate'
+import kelvinToCelsius from '../utils/kelvinToCelsius'
+
+import TemperatureIcon from './TemperatureIcon'
 
 interface WeatherDIsplayProps {
-  name: string
-  country: string
-  description: string
-  temperature: number
-  date: string
-  main: string
+  currentWeather: CurrentWeatherState
+}
+
+export default function WeatherDIsplay({
+  currentWeather,
+}: WeatherDIsplayProps) {
+  const { theme } = useTheme()
+  const { navigate } = useNavigation()
+
+  return (
+    <>
+      <View style={styles.row}>
+        <View>
+          <Text style={[styles.weatherText, { color: theme.onBackground }]}>
+            {currentWeather.data?.weather[0].main}
+          </Text>
+          <Text style={[styles.text, { color: theme.onBackground }]}>
+            {getFormatedDate(currentWeather.data!.dt)}
+          </Text>
+          <Text style={[styles.text, { color: theme.onBackground }]}>
+            {`${currentWeather.data?.name}, ${currentWeather.data?.sys.country}`}
+          </Text>
+        </View>
+        <Text style={[styles.tempText, { color: theme.onBackground }]}>
+          {kelvinToCelsius(currentWeather.data!.main.temp)}°C
+        </Text>
+      </View>
+      <TemperatureIcon weather={currentWeather.data!.weather[0].main} />
+
+      <Text style={[styles.weatherText, { color: theme.onBackground }]}>
+        {currentWeather.data?.weather[0].description}
+      </Text>
+      <Text style={[styles.text, { color: theme.onBackground }]}>
+        Wind: {currentWeather.data?.wind.speed} m/h
+      </Text>
+      <Text style={[styles.text, { color: theme.onBackground }]}>
+        Humidity: {currentWeather.data?.main.humidity}%
+      </Text>
+      <Text style={[styles.text, { color: theme.onBackground }]}>
+        Feels like: {kelvinToCelsius(currentWeather.data!.main.feels_like)}
+        °C
+      </Text>
+      <RectButton
+        onPress={() => navigate('Forecast')}
+        style={[styles.button, { backgroundColor: theme.primary }]}>
+        <View style={styles.row}>
+          <Text style={[styles.text, { color: theme.onPrimary }]}>
+            Weather Forecast
+          </Text>
+          <AntDesign name="arrowright" size={30} color={theme.onPrimary} />
+        </View>
+      </RectButton>
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-
-  horizontalContainer: {
+  row: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
 
-  bigText: {
-    fontSize: 20,
-    fontFamily: 'Inter_300Light',
-  },
-
-  smallText: {
-    fontSize: 16,
+  weatherText: {
+    fontSize: 22,
     fontFamily: 'Inter_500Medium',
   },
 
-  row: {
-    flexDirection: 'row',
+  text: {
+    fontSize: 18,
+    fontFamily: 'Inter_300Light',
   },
 
-  date: {
-    fontSize: 20,
-    fontFamily: 'Inter_400Regular',
-    textAlign: 'center',
+  tempText: {
+    fontSize: 22,
+    fontFamily: 'Inter_500Medium',
   },
 
-  img: {
-    marginVertical: 20,
+  button: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    padding: 10,
+    borderRadius: 8,
   },
 })
-
-export default function WeatherDIsplay({
-  name,
-  country,
-  date,
-  description,
-  temperature,
-  main,
-}: WeatherDIsplayProps) {
-  const { width, height } = useWindowDimensions()
-  const { theme } = useContext(ThemeContext)
-
-  function renderSwitch() {
-    switch (main) {
-      case 'Rain':
-        return (
-          <Raining
-            width={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            height={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            style={styles.img}
-          />
-        )
-
-      case 'Clouds':
-        return (
-          <Cloud
-            width={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            height={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            style={styles.img}
-          />
-        )
-
-      case 'Clear':
-        return (
-          <Sunlight
-            width={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            height={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            style={styles.img}
-          />
-        )
-
-      default:
-        return (
-          <Snow
-            width={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            height={isVertical({ height, width }) ? width * 0.8 : width * 0.3}
-            style={styles.img}
-          />
-        )
-    }
-  }
-
-  return (
-    <View
-      style={
-        isVertical({ height, width })
-          ? [styles.container, { width: width }]
-          : styles.horizontalContainer
-      }>
-      <View>
-        <View style={styles.row}>
-          <Text style={[styles.bigText, { color: theme.text }]}>{name}, </Text>
-          <Text style={[styles.bigText, { color: theme.text }]}>
-            {country}{' '}
-          </Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={[styles.smallText, { color: theme.text }]}>
-            {(temperature - 273.15).toString().slice(0, 2)}ºC -
-          </Text>
-          <Text style={[styles.smallText, { color: theme.text }]}>
-            {' '}
-            {description}{' '}
-          </Text>
-        </View>
-      </View>
-      {renderSwitch()}
-      <Text style={[styles.date, { color: theme.text }]}> {date} </Text>
-    </View>
-  )
-}
