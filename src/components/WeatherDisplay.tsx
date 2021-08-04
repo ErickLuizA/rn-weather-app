@@ -12,13 +12,13 @@ import kelvinToCelsius from '../utils/kelvinToCelsius'
 
 import TemperatureIcon from './TemperatureIcon'
 
-interface WeatherDIsplayProps {
+interface WeatherDisplayProps {
   currentWeather: CurrentWeatherState
 }
 
-export default function WeatherDIsplay({
+export default function WeatherDisplay({
   currentWeather,
-}: WeatherDIsplayProps) {
+}: WeatherDisplayProps) {
   const { theme } = useTheme()
   const { navigate } = useNavigation()
 
@@ -56,7 +56,13 @@ export default function WeatherDIsplay({
         °C
       </Text>
       <RectButton
-        onPress={() => navigate('Forecast')}
+        onPress={() =>
+          navigate('Forecast', {
+            cityName: currentWeather.data?.name,
+            latitude: currentWeather.data?.coord.lat,
+            longitude: currentWeather.data?.coord.lon,
+          })
+        }
         style={[styles.button, { backgroundColor: theme.primary }]}>
         <View style={styles.row}>
           <Text style={[styles.text, { color: theme.onPrimary }]}>
