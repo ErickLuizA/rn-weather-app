@@ -8,43 +8,48 @@ import Snow from '../../assets/snow.svg'
 
 interface ITemperatureIconProps {
   weather: string
+  customWidth?: number
+  customHeight?: number
 }
 
 const { width } = Dimensions.get('window')
 
-export default function TemperatureIcon({ weather }: ITemperatureIconProps) {
+export default function TemperatureIcon({
+  weather,
+  customHeight,
+  customWidth,
+}: ITemperatureIconProps) {
+  const finalWidth = customWidth ?? width / 1.2
+  const finalHeight = customHeight ?? width * 1.2
+
   switch (weather) {
     case 'Rain':
       return (
-        <Raining
-          width={width / 1.2}
-          height={width * 1.2}
-          style={styles.align}
-        />
+        <Raining width={finalWidth} height={finalHeight} style={styles.align} />
       )
 
     case 'Clouds':
       return (
-        <Clouds width={width / 1.2} height={width * 1.2} style={styles.align} />
+        <Clouds width={finalWidth} height={finalHeight} style={styles.align} />
       )
 
     case 'Clear':
       return (
         <Sunlight
-          width={width / 1.2}
-          height={width * 1.2}
+          width={finalWidth}
+          height={finalHeight}
           style={styles.align}
         />
       )
 
     case 'Snow':
       return (
-        <Snow width={width / 1.2} height={width * 1.2} style={styles.align} />
+        <Snow width={finalWidth} height={finalHeight} style={styles.align} />
       )
 
     default:
       return (
-        <Clouds width={width / 1.2} height={width * 1.2} style={styles.align} />
+        <Clouds width={finalWidth} height={finalHeight} style={styles.align} />
       )
   }
 }
