@@ -3,19 +3,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { AntDesign } from '@expo/vector-icons'
 
 import Home from '../screens/Home'
+import useTheme from '../hooks/useTheme'
 // import Search from '../screens/Search'
 // import Settings from '../screens/Settings'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
 export default function BottomTab() {
+  const { theme } = useTheme()
+
   return (
     <Navigator
       tabBarOptions={{
         adaptive: true,
-        iconStyle: { flexGrow: 0.8 },
-        showLabel: false,
-        safeAreaInsets: { bottom: 10 },
+        safeAreaInsets: {
+          bottom: 10,
+        },
+        activeTintColor: theme.primary,
+        inactiveTintColor: theme.onBackground,
+        style: { backgroundColor: theme.background },
       }}
       initialRouteName="Home">
       <Screen
