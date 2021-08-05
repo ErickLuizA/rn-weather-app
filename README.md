@@ -27,13 +27,9 @@
   <a href="#framed_picture-screenshots">Screenshots</a>
 </p>
 
-> Under construction
-
 ## :clipboard: Description
 
 SkyKow is a weather app built with react native
-
-The inspiration for this incredible name comes from the fact I type wrong the other incredible name 'SkyKnow' -> 'SkyKow'
 
 ## :building_construction: Technologies
 
@@ -58,13 +54,13 @@ The inspiration for this incredible name comes from the fact I type wrong the ot
 $ cd SkyKow
 
 # Install dependencies
-$ yarn install
+$ npm install
 ```
 
 ## 3. Execution
 
 ```shell
-$ yarn start or expo start(to run in the expo client)
+$ npm start or expo start(to run in the expo client)
 ```
 
 ## :memo: License
@@ -73,16 +69,13 @@ $ yarn start or expo start(to run in the expo client)
 
 <div>
   <img alt="SkyKow icon" src="./.github/Home.png"  width="200"/>
+    <img alt="SkyKow icon" src="./.github/Forecast.png"  width="200"/>
   <img alt="SkyKow icon" src="./.github/Search.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Search_result.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/Searched.png"  width="200"/>
   <img alt="SkyKow icon" src="./.github/Settings.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Dark.png"  width="200"/>
+  <img alt="SkyKow icon" src="./.github/SettingsLight.png"  width="200"/>
+    <img alt="SkyKow icon" src="./.github/Notifications.png"  width="200"/>
 </div>
-
-## :information_source: TODO
-  - Tests
-  - Fix notifications
-  - Design fix
 
 
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
