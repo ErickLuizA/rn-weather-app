@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <ScrollView
       style={[styles.successContainer, { backgroundColor: theme.background }]}>
-      <WeatherDisplay currentWeather={currentWeather} />
+      <WeatherDisplay currentWeather={currentWeather.data!} />
     </ScrollView>
   )
 }

@@ -4,7 +4,7 @@ import { RectButton } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/core'
 import { AntDesign } from '@expo/vector-icons'
 
-import { CurrentWeatherState } from '../hooks/useCurrentWeather'
+import { WeatherData } from '../models/Weather'
 import useTheme from '../hooks/useTheme'
 
 import { getFormatedDate } from '../utils/formatDate'
@@ -13,7 +13,7 @@ import kelvinToCelsius from '../utils/kelvinToCelsius'
 import TemperatureIcon from './TemperatureIcon'
 
 interface WeatherDisplayProps {
-  currentWeather: CurrentWeatherState
+  currentWeather: WeatherData
 }
 
 export default function WeatherDisplay({
@@ -27,40 +27,40 @@ export default function WeatherDisplay({
       <View style={styles.row}>
         <View>
           <Text style={[styles.weatherText, { color: theme.onBackground }]}>
-            {currentWeather.data?.weather[0].main}
+            {currentWeather.weather[0].main}
           </Text>
           <Text style={[styles.text, { color: theme.onBackground }]}>
-            {getFormatedDate(currentWeather.data!.dt)}
+            {getFormatedDate(currentWeather.dt)}
           </Text>
           <Text style={[styles.text, { color: theme.onBackground }]}>
-            {`${currentWeather.data?.name}, ${currentWeather.data?.sys.country}`}
+            {`${currentWeather.name}, ${currentWeather.sys.country}`}
           </Text>
         </View>
         <Text style={[styles.tempText, { color: theme.onBackground }]}>
-          {kelvinToCelsius(currentWeather.data!.main.temp)}°C
+          {kelvinToCelsius(currentWeather.main.temp)}°C
         </Text>
       </View>
-      <TemperatureIcon weather={currentWeather.data!.weather[0].main} />
+      <TemperatureIcon weather={currentWeather.weather[0].main} />
 
       <Text style={[styles.weatherText, { color: theme.onBackground }]}>
-        {currentWeather.data?.weather[0].description}
+        {currentWeather.weather[0].description}
       </Text>
       <Text style={[styles.text, { color: theme.onBackground }]}>
-        Wind: {currentWeather.data?.wind.speed} m/h
+        Wind: {currentWeather.wind.speed} m/h
       </Text>
       <Text style={[styles.text, { color: theme.onBackground }]}>
-        Humidity: {currentWeather.data?.main.humidity}%
+        Humidity: {currentWeather.main.humidity}%
       </Text>
       <Text style={[styles.text, { color: theme.onBackground }]}>
-        Feels like: {kelvinToCelsius(currentWeather.data!.main.feels_like)}
+        Feels like: {kelvinToCelsius(currentWeather.main.feels_like)}
         °C
       </Text>
       <RectButton
         onPress={() =>
           navigate('Forecast', {
-            cityName: currentWeather.data?.name,
-            latitude: currentWeather.data?.coord.lat,
-            longitude: currentWeather.data?.coord.lon,
+            cityName: currentWeather.name,
+            latitude: currentWeather.coord.lat,
+            longitude: currentWeather.coord.lon,
           })
         }
         style={[styles.button, { backgroundColor: theme.primary }]}>
