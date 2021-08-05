@@ -6,7 +6,7 @@ import useTheme from '../hooks/useTheme'
 
 import Home from '../screens/Home'
 import Search from '../screens/Search'
-// import Settings from '../screens/Settings'
+import Settings from '../screens/Settings'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -43,13 +43,15 @@ export default function BottomTab() {
           },
         }}
       />
-      {/* <Screen name="Settings" component={Settings}
-            options={{
+      <Screen
+        name="Settings"
+        component={Settings}
+        options={{
           tabBarIcon: ({ color, size }) => {
             return <AntDesign name="setting" size={size} color={color} />
           },
         }}
-         /> */}
+      />
     </Navigator>
   )
 }
