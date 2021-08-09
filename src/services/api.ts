@@ -2,9 +2,12 @@ import axios from 'axios'
 import { ForecastWeather } from '../models/ForecastWeather'
 import { WeatherData } from '../models/Weather'
 
-const BASE_URL = 'http://api.openweathermap.org/data/2.5'
-
-axios.defaults.baseURL = BASE_URL
+const weatherApi = axios.create({
+  baseURL: 'http://api.openweathermap.org/data/2.5',
+  params: {
+    appid: process.env.API_KEY,
+  },
+})
 
 type ByCity = {
   type: 'city'
@@ -37,10 +40,9 @@ export async function getCurrentWeather({ params }: IGetCurrentWeatherParams) {
           lon: params.longitude,
         }
 
-  const response = await axios.get<WeatherData>('/weather', {
+  const response = await weatherApi.get<WeatherData>('/weather', {
     params: {
       ...locationParams,
-      appid: process.env.API_KEY,
     },
   })
 
@@ -51,7 +53,7 @@ export async function getForecastWeather({
   latitude,
   longitude,
 }: IGetForecastWeatherParams) {
-  const response = await axios.get<ForecastWeather>('/onecall', {
+  const response = await weatherApi.get<ForecastWeather>('/onecall', {
     params: {
       lat: latitude,
       lon: longitude,
