@@ -11,7 +11,7 @@ import useNotifications from '../../hooks/useNotifications'
 export default function Settings() {
   const { theme, toggle } = useTheme()
 
-  const { toggleNotifications, notification } = useNotifications()
+  const { toggleNotifications, notificationToken } = useNotifications()
 
   return (
     <ScrollView
@@ -25,8 +25,8 @@ export default function Settings() {
       <SettingCard
         onPress={toggleNotifications}
         label="Notifications"
-        description={notification ? 'Notification On' : 'Notification Off'}
-        icon={notification ? 'notifications-active' : 'notifications-none'}
+        description={notificationToken ? 'Notification On' : 'Notification Off'}
+        icon={notificationToken ? 'notifications-active' : 'notifications-none'}
       />
     </ScrollView>
   )

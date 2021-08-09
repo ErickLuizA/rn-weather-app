@@ -4,29 +4,35 @@ import * as Notifications from 'expo-notifications'
 import { Constants } from 'react-native-unimodules'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { removeToken, sendToken } from '../services/notificationApi'
+
+const NOTIFICATION_TOKEN = '@RN/NotificationToken'
+
 export default function useNotifications() {
-  const [notification, setNotification] = useState(false)
+  const [notificationToken, setNotificationToken] = useState('')
 
   useEffect(() => {
     getIsNotificationOn()
   }, [])
 
   async function getIsNotificationOn() {
-    const notificationOn = await AsyncStorage.getItem('@RN/Notification')
+    const token = await AsyncStorage.getItem(NOTIFICATION_TOKEN)
 
-    setNotification(Boolean(notificationOn))
+    setNotificationToken(token ?? '')
   }
 
   async function toggleNotifications() {
-    if (notification) {
-      await AsyncStorage.removeItem('@RN/Notification')
+    if (notificationToken) {
+      await AsyncStorage.removeItem(NOTIFICATION_TOKEN)
 
-      setNotification(false)
+      await removeToken(notificationToken)
+
+      setNotificationToken('')
     } else {
       try {
         await registerForPushNotificationsAsync()
       } catch (error) {
-        setNotification(false)
+        setNotificationToken('')
       }
     }
   }
@@ -56,7 +62,11 @@ export default function useNotifications() {
         })
       ).data
 
-      console.log(token)
+      await AsyncStorage.setItem(NOTIFICATION_TOKEN, token)
+
+      setNotificationToken(token)
+
+      await sendToken(token)
     } else {
       Alert.alert('Must use physical device for Push Notifications')
     }
@@ -69,11 +79,7 @@ export default function useNotifications() {
         lightColor: '#FF231F7C',
       })
     }
-
-    await AsyncStorage.setItem('@RN/Notification', 'true')
-
-    setNotification(true)
   }
 
-  return { toggleNotifications, notification }
+  return { toggleNotifications, notificationToken }
 }
