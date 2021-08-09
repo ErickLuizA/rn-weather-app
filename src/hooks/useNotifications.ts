@@ -32,6 +32,8 @@ export default function useNotifications() {
       try {
         await registerForPushNotificationsAsync()
       } catch (error) {
+        await AsyncStorage.removeItem(NOTIFICATION_TOKEN)
+
         setNotificationToken('')
       }
     }
@@ -62,11 +64,11 @@ export default function useNotifications() {
         })
       ).data
 
+      await sendToken(token)
+
       await AsyncStorage.setItem(NOTIFICATION_TOKEN, token)
 
       setNotificationToken(token)
-
-      await sendToken(token)
     } else {
       Alert.alert('Must use physical device for Push Notifications')
     }
