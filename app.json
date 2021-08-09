@@ -9,6 +9,8 @@
       "**/*"
     ],
     "android": {
+      "package": "com.skykow",
+      "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true
     },
     "icon": "./assets/icon.png",

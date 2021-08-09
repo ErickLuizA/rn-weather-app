@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import * as Notifications from 'expo-notifications'
-import * as Location from 'expo-location'
+import { Constants } from 'react-native-unimodules'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-import { getCurrentWeather } from '../services/api'
-
-import kelvinToCelsius from '../utils/kelvinToCelsius'
 
 export default function useNotifications() {
   const [notification, setNotification] = useState(false)
@@ -22,86 +18,61 @@ export default function useNotifications() {
   }
 
   async function toggleNotifications() {
-    if (!notification) {
-      const position = await getPosition()
-
-      if (position) {
-        const response = await getCurrentWeather({
-          params: {
-            type: 'geo',
-            latitude: position.latitude,
-            longitude: position.longitude,
-          },
-        })
-
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            sound: 'default',
-            title: 'SkyKow',
-            body: `${response.name} - ${kelvinToCelsius(response.main.temp)}ºC`,
-          },
-          trigger: {
-            seconds: 86400,
-            // seconds: 5,
-            repeats: true,
-          },
-        })
-
-        Notifications.setNotificationHandler({
-          handleNotification: async () => ({
-            shouldShowAlert: true,
-            shouldPlaySound: false,
-            shouldSetBadge: true,
-          }),
-        })
-      }
-
-      AsyncStorage.setItem('@RN/Notification', 'true')
-
-      setNotification(true)
-    } else {
-      await Notifications.cancelAllScheduledNotificationsAsync()
-
-      AsyncStorage.removeItem('@RN/Notification')
+    if (notification) {
+      await AsyncStorage.removeItem('@RN/Notification')
 
       setNotification(false)
-    }
-  }
-
-  async function getPermission(): Promise<boolean> {
-    const { status } = await Location.getForegroundPermissionsAsync()
-
-    let granted = true
-
-    if (status !== 'granted') {
-      const request = await Location.requestForegroundPermissionsAsync()
-
-      granted = request.status === 'granted'
-    }
-
-    return granted
-  }
-
-  async function getPosition() {
-    const isPermited = await getPermission()
-
-    if (isPermited) {
-      try {
-        const { coords } = await Location.getCurrentPositionAsync()
-
-        return coords
-      } catch (error) {
-        Alert.alert(
-          'Location permission',
-          'The location is necessary to activate notifications',
-        )
-      }
     } else {
-      Alert.alert(
-        'Location permission',
-        'The location is necessary to activate notifications',
-      )
+      try {
+        await registerForPushNotificationsAsync()
+      } catch (error) {
+        setNotification(false)
+      }
     }
+  }
+
+  const registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync()
+
+      let finalStatus = existingStatus
+
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync()
+
+        finalStatus = status
+      }
+
+      if (finalStatus !== 'granted') {
+        Alert.alert('Failed to get push token for push notification!')
+
+        return
+      }
+
+      const token = (
+        await Notifications.getExpoPushTokenAsync({
+          experienceId: '@erickluiza/SkyKow',
+        })
+      ).data
+
+      console.log(token)
+    } else {
+      Alert.alert('Must use physical device for Push Notifications')
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      })
+    }
+
+    await AsyncStorage.setItem('@RN/Notification', 'true')
+
+    setNotification(true)
   }
 
   return { toggleNotifications, notification }
