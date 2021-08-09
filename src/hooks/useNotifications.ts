@@ -81,6 +81,14 @@ export default function useNotifications() {
         lightColor: '#FF231F7C',
       })
     }
+
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    })
   }
 
   return { toggleNotifications, notificationToken }
