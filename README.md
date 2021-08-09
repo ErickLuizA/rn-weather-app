@@ -77,6 +77,8 @@ $ npm start or expo start(to run in the expo client)
     <img alt="SkyKow icon" src="./.github/Notifications.png"  width="200"/>
 </div>
 
+[API](https://github.com/ErickLuizA/skykow-api)
+
 
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
 
