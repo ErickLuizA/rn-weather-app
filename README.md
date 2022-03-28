@@ -1,7 +1,7 @@
-<h1 align="center"> SkyKow </h1>
+<h1 align="center"> rn-weather-app </h1>
 
 <p align="center">
-  <a href="https://github.com/ErickLuizA/SkyKow/graphs/commit-activity" alt="Maintenance">
+  <a href="https://github.com/ErickLuizA/rn-weather-app/graphs/commit-activity" alt="Maintenance">
     <img src="https://img.shields.io/badge/Maintained%3F-yes-1EAE72.svg" />
   </a>
 
@@ -11,12 +11,12 @@
 
 <br/>
 
-<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ErickLuizA/SkyKow?color=blue">
+<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ErickLuizA/rn-weather-app?color=blue">
 
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/ErickLuizA/SkyKow">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/ErickLuizA/rn-weather-app">
 
-<a href="https://github.com/ErickLuizA/SkyKow/stargazers">
-  <img alt="GitHub stars" src="https://img.shields.io/github/stars/ErickLuizA/SkyKow?style=social">
+<a href="https://github.com/ErickLuizA/rn-weather-app/stargazers">
+  <img alt="GitHub stars" src="https://img.shields.io/github/stars/ErickLuizA/rn-weather-app?style=social">
 </a>
 
 <p align="center">
@@ -29,7 +29,7 @@
 
 ## :clipboard: Description
 
-SkyKow is a weather app built with react native
+rn-weather-app is a weather app built with react native
 
 ## :building_construction: Technologies
 
@@ -44,14 +44,14 @@ SkyKow is a weather app built with react native
 ## 1. Download the repository
 
 ```shell
- $ git clone https://github.com/ErickLuizA/SkyKow.git
+ $ git clone https://github.com/ErickLuizA/rn-weather-app.git
 ```
 
 ## 2. Installation
 
 ```shell
 # Go into the repository
-$ cd SkyKow
+$ cd rn-weather-app
 
 # Install dependencies
 $ npm install
@@ -68,17 +68,16 @@ $ npm start or expo start(to run in the expo client)
 ## :framed_picture: Screenshots
 
 <div>
-  <img alt="SkyKow icon" src="./.github/Home.png"  width="200"/>
-    <img alt="SkyKow icon" src="./.github/Forecast.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Search.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Searched.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/Settings.png"  width="200"/>
-  <img alt="SkyKow icon" src="./.github/SettingsLight.png"  width="200"/>
-    <img alt="SkyKow icon" src="./.github/Notifications.png"  width="200"/>
+  <img alt="rn-weather-app icon" src="./.github/Home.png"  width="200"/>
+    <img alt="rn-weather-app icon" src="./.github/Forecast.png"  width="200"/>
+  <img alt="rn-weather-app icon" src="./.github/Search.png"  width="200"/>
+  <img alt="rn-weather-app icon" src="./.github/Searched.png"  width="200"/>
+  <img alt="rn-weather-app icon" src="./.github/Settings.png"  width="200"/>
+  <img alt="rn-weather-app icon" src="./.github/SettingsLight.png"  width="200"/>
+    <img alt="rn-weather-app icon" src="./.github/Notifications.png"  width="200"/>
 </div>
 
-[API](https://github.com/ErickLuizA/skykow-api)
-
+[API](https://github.com/ErickLuizA/rn-weather-app-api)
 
 This project is under the MIT license. See the file [LICENSE](LICENSE) for more details.
 
